@@ -58,7 +58,7 @@ export class AppComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const nuevasImagenes: ImagenItem[] = [];
-      
+
       for (let i = 0; i < input.files.length; i++) {
         const file = input.files[i] as File & { path?: string };
         const filePath = file.path || "";
@@ -79,7 +79,7 @@ export class AppComponent implements OnInit {
       } else {
         this.statusMessage.set("No se pudo obtener la ruta completa. Te recomendamos arrastrar los archivos directamente.");
       }
-      
+
       // Reset input
       input.value = "";
     }

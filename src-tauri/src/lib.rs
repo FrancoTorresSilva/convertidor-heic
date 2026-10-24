@@ -24,7 +24,7 @@ fn convertir_imagenes(imagenes: Vec<Imagen>) -> Result<usize, String> {
             .and_then(|p| p.to_str())
             .unwrap_or("");
 
-        let nombre_salida = format!("{}/{}_convertida.jpg", ruta_directorio, imagen.nombre);
+        let nombre_salida = format!("{}/{}_convertida.jpg", ruta_directorio, imagen.name);
 
         if image::save_buffer(
             &nombre_salida,
