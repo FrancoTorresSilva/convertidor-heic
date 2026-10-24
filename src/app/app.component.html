@@ -1,0 +1,65 @@
+<main class="container">
+  <h1>Convertidor HEIC a JPG (Lote)</h1>
+  <p class="subtitle">Arrastra tus imágenes HEIC o selecciónalas con el botón</p>
+
+  <div 
+    class="drop-zone"
+    (dragover)="onDragOver($event)"
+    (drop)="onDropFile($event)">
+    
+    <div class="drop-prompt">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="17 8 12 3 7 8"></polyline>
+        <line x1="12" y1="3" x2="12" y2="15"></line>
+      </svg>
+      <p>Suelta tus imágenes HEIC aquí o</p>
+      <button class="select-files-btn" (click)="fileInput.click()">Seleccionar archivos</button>
+    </div>
+
+    <input 
+      #fileInput 
+      type="file" 
+      multiple 
+      accept=".heic,.HEIC,.jpg,.jpeg,.png" 
+      style="display: none" 
+      (change)="onFileSelected($event)" 
+    />
+  </div>
+
+  @if (selectedFiles().length > 0) {
+    <div class="config-section">
+      <div class="list-header">
+        <h3>Archivos seleccionados ({{ selectedFiles().length }})</h3>
+        <button class="clear-btn" (click)="limpiarTodo()">Limpiar todo</button>
+      </div>
+
+      <ul class="file-list">
+        @for (file of selectedFiles(); track file.path; let idx = $index) {
+          <li class="file-item">
+            <div class="file-details">
+              <span class="file-name">{{ file.name }}.jpg</span>
+              <span class="file-path">{{ file.path }}</span>
+            </div>
+            <button class="remove-btn" (click)="removerArchivo(idx)">✕</button>
+          </li>
+        }
+      </ul>
+
+      <button 
+        class="convert-btn" 
+        [disabled]="isConverting()" 
+        (click)="convertirTodas()">
+        {{ isConverting() ? 'Convirtiendo...' : 'Convertir Todas' }}
+      </button>
+    </div>
+  }
+
+  @if (statusMessage()) {
+    <div class="status-box">
+      <p>{{ statusMessage() }}</p>
+    </div>
+  }
+
+  <router-outlet />
+</main>
